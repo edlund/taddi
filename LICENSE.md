@@ -1,4 +1,4 @@
-TADI - Type Annotation Dependency injection
+TADDI - Type Annotation Driven Dependency injection
 Copyright (c) 2019, Erik Edlund <erik.edlund@32767.se>
 
 Redistribution and use in source and binary forms, with or without modification,

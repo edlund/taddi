@@ -1,4 +1,4 @@
-# TADI - Type Annotation Dependency injection
+# TADDI - Type Annotation Driven Dependency injection
 
 How it works in a nutshell: An `Interface` (an abstract Python
 base class) is registered with its `Implementation` (a concrete

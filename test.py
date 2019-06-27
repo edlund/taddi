@@ -1,4 +1,4 @@
-# TADI - Type Annotation Dependency injection
+# TADDI - Type Annotation Driven Dependency injection
 # Copyright (c) 2019, Erik Edlund <erik.edlund@32767.se>
 # 
 # Redistribution and use in source and binary forms, with or without modification,
@@ -28,7 +28,7 @@
 
 import unittest
 
-from tadi import (
+from taddi import (
     CyclicDependencyError,
     ImplementedError,
     ImplementationInterfaceMismatchError,
@@ -123,13 +123,14 @@ class InjectorTestCase(unittest.TestCase):
         self.assertIsInstance(supercomplex_service.simpletwo_service, SimpleTwoServiceImpl)
     
     def testResolveCallable(self) -> None:
-        def inner(supercomplex_service: SuperComplexService) -> None:
+        def inner(supercomplex_service: SuperComplexService) -> int:
             self.assertIsInstance(supercomplex_service, SuperComplexServiceImpl)
             # Mypy does not pick up on the assertIsInstance() here.
             supercomplex_serviceimpl = cast(SuperComplexServiceImpl, supercomplex_service)
             self.assertIsInstance(supercomplex_serviceimpl.config, Config)
             self.assertIsInstance(supercomplex_serviceimpl.simpleone_service, SimpleOneServiceImpl)
             self.assertIsInstance(supercomplex_serviceimpl.simpletwo_service, SimpleTwoServiceImpl)
+            return 1
         injector = Injector()
         injector.register_singleton(Config, Config())
         injector.register_scoped(SuperComplexService, SuperComplexServiceImpl)
@@ -137,7 +138,7 @@ class InjectorTestCase(unittest.TestCase):
         injector.register_scoped(SimpleTwoService, SimpleTwoServiceImpl)
         inner_wrap = injector.resolve_callable(inner)
         self.assertTrue(callable(inner_wrap))
-        inner_wrap()
+        self.assertEqual(inner_wrap(), 1)
     
     def testImplementedError(self) -> None:
         with self.assertRaises(ImplementedError) as context:

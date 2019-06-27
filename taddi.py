@@ -1,4 +1,4 @@
-# TADI - Type Annotation Dependency injection
+# TADDI - Type Annotation Driven Dependency injection
 # Copyright (c) 2019, Erik Edlund <erik.edlund@32767.se>
 # 
 # Redistribution and use in source and binary forms, with or without modification,
@@ -137,7 +137,7 @@ class Injector(object):
             )
         return implementation(**kwargs)
 
-    def resolve_callable(self, fn: Any) -> Callable[[], None]:
+    def resolve_callable(self, fn: Any) -> Callable[[], Any]:
         if not callable(fn):
             raise ValueError("The argument must be callable")
         fullargspec = inspect.getfullargspec(fn)
